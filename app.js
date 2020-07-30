@@ -156,7 +156,7 @@ app.get("/create/submit/sample", isLoggedIn, function(req, res){
 		if(err){
 			console.log(err);
 		} else {
-			res.render("submit-sample.ejs",{packs:allPacks});
+			res.render("submit-sample",{packs:allPacks});
 		}
 	})
 });
@@ -243,7 +243,7 @@ app.post("/create/submit/sample", isLoggedIn, function(req, res){
 								console.log(err);
 								res.send("ERROR");
 							} else {
-								res.render("success.ejs");
+								res.send("SUCCESS");
 							}
 						});
 					}
@@ -500,7 +500,7 @@ app.post("/create/submit/multitrack", isLoggedIn, function(req, res){
 
 // PACK SUBMISSION //
 app.get("/create/submit/pack", isLoggedIn, function(req, res){
-	res.render("submit-pack.ejs");
+	res.render("submit-pack");
 });
 
 app.post("/create/submit/pack", isLoggedIn, function(req, res){
@@ -537,7 +537,7 @@ app.post("/create/submit/pack", isLoggedIn, function(req, res){
 						console.log(err);
 						res.send("ERROR");
 					} else {
-						res.render("success.ejs");
+						res.render("SUCCESS");
 					}
 		});
 		}

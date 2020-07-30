@@ -17,9 +17,15 @@ $(document).ready(function() {
 
 $(document).ready(function() {
     $( "#samples" ).on( "click", function(){
-        $('#dyncontent').fadeOut('slow', function(){   
-            $('#dyncontent').load("sampler.ejs", function(){
-                $('#dyncontent').fadeIn('slow');
+        $('#dyncontent').fadeOut('slow', function(){ 
+            Sample.find({},function(err, allSamples){
+                if(err){
+                    console.log(err);
+                } else {
+                    $('#dyncontent').load("sampler.ejs", {samples:allSamples}, function(){
+                    $('#dyncontent').fadeIn('slow');
+                    });
+                }
             });
         });
     });

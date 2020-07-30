@@ -736,7 +736,7 @@ function isLoggedIn(req, res, next){
 // TEACH ROUTES //
 
 app.get("*", function(req, res){
-	res.render("invalid.ejs");
+	res.render("index.ejs");
 })
 
 const port = process.env.PORT || 3000;

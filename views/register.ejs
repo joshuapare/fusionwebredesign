@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create - Music App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../public/stylesheets/create.css">
+    <link rel="stylesheet" type="text/css" href="../public/stylesheets/register.css">
+    <script src="https://kit.fontawesome.com/023edff769.js" crossorigin="anonymous"></script></head>
+    
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    
+        <!-- NAVBAR -->
+    <header class="masthead">
+        <div class="inner">
+        <img src="../public/pictures/circle-logo.png" id="navbarlogo">  
+        </div>
+        <nav class="nav nav-masthead justify-content-center"><i class="fas fa-times"></i></nav>
+
+    </header>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <img id="loginpic" src="../public/pictures/fusion-logo-worded.png">
+        </div>
+        <div class="row justify-content-center">
+            <h5>Create Your Account</h5>
+        </div>
+        <form action="/register" method="POST" enctype="multipart/form-data">
+        <div class="row">
+            <div class="d-flex flex-fill">
+
+                <div class="p-2">
+                    <div class="form-control-group">
+                        <img src="../public/pictures/users/placeholderimage.jpg" id="userimage" class="rounded-circle" alt="Placeholder">
+                    </div>
+                    <div class="form-control-group">
+                        <label for="image">Image</label>
+                    </div>
+                    <div>
+						<input type="file" name="file" class="form-control-group" id="image" required>
+					</div>
+                </div>
+
+                <div class="p-2 flex-fill">
+
+                    <div class="d-flex flex-row">
+
+                        <div class="p-2 flex-fill">
+                            <div class="form-label-group">
+                                <input type="text" id="inputFirstName" class="form-control" name="firstName" placeholder="First Name" required>
+                                <label for="inputFirstName">First Name</label>
+                            </div>
+                        </div>
+                        <div class="p-2 flex-fill">
+                            <div class="form-label-group">
+                                <input type="text" id="inputLastName" class="form-control" name="lastName" placeholder="Last Name" required>
+                                <label for="inputLastName">Last Name</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex form-label-group">
+                        <input type="text" id="inputUsername" class="form-control" name="username" placeholder="Username" required>
+                        <label for="inputUsername">Username</label>
+                    </div>
+
+                    <div class="d-flex form-label-group">
+                        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="Password" required>
+                        <label for="inputPassword">Password</label>
+                    </div>
+                    
+                    <div class="d-flex form-label-group">
+                        <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Password" required>
+                        <label for="inputConfirmPassword">Confirm password</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="p-2 flex-fill">
+                <div class="form-control-group">
+                    <label for="bio">Bio</label>
+                    <textarea type="text" name="bio" class="form-control" id="bio" rows="2" placeholder="Enter your bio"></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="p-2 flex-fill">
+                <div class="form-group">
+                    <label for="campus">Campus</label>
+                    <select name="campus" class="form-control" id="campus" required>
+                        <option>Choose...</option>
+                        <option>Alexandria</option>
+                        <option>Alpharetta</option>
+                        <option>Andover</option>
+                        <option>Ardmore</option>
+                        <option>Austin</option>
+                        <option>Berkeley</option>
+                        <option>Boca Raton</option>
+                        <option>Brooklyn</option>
+                        <option>Buckhead</option>
+                        <option>Burlington</option>
+                        <option>Charlotte</option>
+                        <option>Cherry Hill</option>
+                        <option>Columbia</option>
+                        <option>Dallas</option>
+                        <option>Denver</option>
+                        <option>Englewood</option>
+                        <option>Evanston</option>
+                        <option>Fairfield</option>
+                        <option>Greenwich</option>
+                        <option>Hingham</option>
+                        <option>Houston Galleria</option>
+                        <option>Huntington Beach</option>
+                        <option>Lake Forest</option>
+                        <option>Lincoln Park</option>
+                        <option>Long Island</option>
+                        <option>Los Angeles</option>
+                        <option>Los Gatos</option>
+                        <option>Loudoun</option>
+                        <option>Malvern</option>
+                        <option>Marin</option>
+                        <option>Miami</option>
+                        <option>Miracle Mile</option>
+                        <option>Mission Viejo</option>
+                        <option>Montclair</option>
+                        <option>Morristown</option>
+                        <option>Newton</option>
+                        <option>Oak Brook</option>
+                        <option>Palo Alto</option>
+                        <option>Park Avenue</option>
+                        <option>Pasadena</option>
+                        <option>Plano</option>
+                        <option>Princeton</option>
+                        <option>Raleigh</option>
+                        <option>Rancho Palos Verdes</option>
+                        <option>Rockville</option>
+                        <option>San Diego</option>
+                        <option>San Francisco</option>
+                        <option>San Mateo</option>
+                        <option>Scottsdale</option>
+                        <option>Seattle</option>
+                        <option>Solana Beach</option>
+                        <option>South Bay</option>
+                        <option>Southlake</option>
+                        <option>Sugar Land</option>
+                        <option>The Woodlands</option>
+                        <option>Tysons</option>
+                        <option>Upper West Side</option>
+                        <option>Walnut Creek</option>
+                        <option>Warner Center</option>
+                        <option>Washington D.C.</option>
+                        <option>Westchester</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">      
+            <button class="btn btn-lg btn-light btn-block text-uppercase" type="submit" value="Register" id="registersubmit">Register</button>
+            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign up with Google</button>
+            <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign up with Facebook</button> 
+        </div>
+
+    </form>
+                                              
+</div>
+            
+        
+
+
+<footer class="mastfoot mt-auto">
+    <h6>&copy; Joshua Pare </h6>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="../public/assets/dist/js/create.js" ></script>
+<script src="../public/assets/dist/js/loader.js" ></script>
+</div>
+</body>
+</html> 

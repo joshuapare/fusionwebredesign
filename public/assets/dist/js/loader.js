@@ -1,14 +1,14 @@
-$(document).ready(function() {
-    $('#dyncontent').load("..../views/sampler.ejs", function(){
-        $('#dyncontent').fadeIn('slow', function(){
-        });
-    });
-});
+// $(document).ready(function() {
+//     $('#dyncontent').load("/sampler.ejs", function(){
+//         $('#dyncontent').fadeIn('slow', function(){
+//         });
+//     });
+// });
 
 $(document).ready(function() {
     $( "#loops" ).on( "click", function(){
         $('#dyncontent').fadeOut('slow', function(){
-            $('#dyncontent').load("loops.ejs", function(){
+            $('#dyncontent').load("/loops.ejs", function(){
                 $('#dyncontent').fadeIn('slow');
             });
         });

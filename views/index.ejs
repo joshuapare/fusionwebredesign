@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create - Music App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../public/stylesheets/create.css">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/create.css">
     <script src="https://kit.fontawesome.com/023edff769.js" crossorigin="anonymous"></script></head>
 
     <script src="https://unpkg.com/wavesurfer.js"></script>
@@ -16,7 +16,7 @@
         <!-- NAVBAR -->
     <header class="masthead">
         <div class="inner">
-        <img src="../public/pictures/circle-logo.png" id="navbarlogo">  
+        <img src="../pictures/circle-logo.png" id="navbarlogo">  
           <h3 class="masthead-brand">Fusion Music App</h3>
           <nav class="nav nav-masthead justify-content-center">
             <a class="nav-link active" id="samples" href="#">Samples</a>
@@ -72,7 +72,7 @@
                                 <tbody>
                                     <tr>
                                         <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-                                        <td><img class="samplerart" src="../public/pictures/aaart1.jpeg"></td>
+                                        <td><img class="samplerart" src="../pictures/aaart1.jpeg"></td>
                                         <td>Sample 1</td>
                                     </tr>
                                 </tbody>
@@ -82,6 +82,260 @@
                     <div class="col-sm-9">
                     <!-- Dynamic Area -->
                         <div id="dyncontent"> 
+
+
+                            <!-- SAMPLER -->
+
+<ul class="nav nav-pills nav-fill filterbar">
+    <li class="nav-item">
+      <a class="nav-link" href="#">BPM</a>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Key</a>
+        <div class="dropdown-menu animate slideIn">
+            <a class="dropdown-item">None</a>
+            <a class="dropdown-item">C Major</a>
+            <a class="dropdown-item">C#/Db Major</a>
+            <a class="dropdown-item">D Major</a>
+            <a class="dropdown-item">D#/Eb Major</a>
+            <a class="dropdown-item">E Major</a>
+            <a class="dropdown-item">F Major</a>
+            <a class="dropdown-item">F#/Gb Major</a>
+            <a class="dropdown-item">G Major</a>
+            <a class="dropdown-item">G#/Ab Major</a>
+            <a class="dropdown-item">A Major</a>
+            <a class="dropdown-item">A#/Bb Major</a>
+            <a class="dropdown-item">B Major</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item">C Minor</a>
+            <a class="dropdown-item">C#/Db Minor</a>
+            <a class="dropdown-item">D Minor</a>
+            <a class="dropdown-item">D#/Eb Minor</a>
+            <a class="dropdown-item">E Minor</a>
+            <a class="dropdown-item">F Minor</a>
+            <a class="dropdown-item">F#/Gb Minor</a>
+            <a class="dropdown-item">G Minor</a>
+            <a class="dropdown-item">G#/Ab Minor</a>
+            <a class="dropdown-item">A Minor</a>
+            <a class="dropdown-item">A#/Bb Minor</a>
+            <a class="dropdown-item">B Minor</a>
+        </div>
+    </li>
+    
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Instrument</a>
+        <div class="dropdown-menu animate slideIn">
+          <a class="dropdown-item" >Drums</a>
+          <a class="dropdown-item" >Piano</a>
+          <a class="dropdown-item" >Guitar</a>
+          <a class="dropdown-item" >Vocals</a>
+          <a class="dropdown-item" >Synths</a>
+          <a class="dropdown-item" >Percussion</a>
+          <a class="dropdown-item" >FX</a>
+          <a class="dropdown-item" >Misc</a>
+        </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Genre</a>
+        <div class="dropdown-menu animate slideIn">
+          <a class="dropdown-item" >Pop</a>
+          <a class="dropdown-item" >Rock</a>
+          <a class="dropdown-item" >Hip-Hop</a>
+          <a class="dropdown-item" >EDM</a>
+          <a class="dropdown-item" >House</a>
+          <a class="dropdown-item" >Trap</a>
+          <a class="dropdown-item" >Metal</a>
+          <a class="dropdown-item" >Alternative</a>
+        </div>
+    </li>
+    <li class="nav-item">
+        <input class="form-control" type="text" placeholder="Tags">
+    </li>
+    <li class="nav-item">
+        <button type="submit" class="btn btn-outline-light">Search</button>
+    </li>
+    
+  </ul>
+
+<table class="table table-dark sampler">
+    <thead>
+    <tr>
+        <th scope="col" class="playbutcol"></th>
+        <th scope="col" class="artcol">Pack</th>
+        <th scope="col" class="namecol">Name</th>
+        <th scope="col" class="waveformcol"></th>
+        <th scope="col" class="tagcol">Tags</th>
+        <th scope="col" class="keycol">Key</th>
+        <th scope="col" class="bpmcol">BPM</th>
+        <th scope="col" class="actioncol"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
+        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
+        <td>Sample 1</td>
+        <td><div id="waveform"></div></td>
+        <td>
+            <button type="button" class="btn btn-light">Tag 1</button>
+            <button type="button" class="btn btn-light">Tag 2</button>
+        </td>
+        <td>C Major</td>
+        <td>135</td>
+        <td>
+            <i class="fas fa-plus"></i>
+            <i class="far fa-heart"></i>
+            <i class="fas fa-arrow-circle-down"></i>
+        </td>
+    </tr>
+
+    <tr>
+        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
+        <td><img class="samplerart" src="../pictures/aaart1.jpeg"></td>
+        <td>Sample 1</td>
+        <td><div id="waveform"></div></td>
+        <td>
+            <button type="button" class="btn btn-light">Tag 1</button>
+            <button type="button" class="btn btn-light">Tag 2</button>
+        </td>
+        <td>C Major</td>
+        <td>135</td>
+        <td>
+            <i class="fas fa-plus"></i>
+            <i class="far fa-heart"></i>
+            <i class="fas fa-arrow-circle-down"></i>
+        </td>
+    </tr>
+
+    <tr>
+        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
+        <td><img class="samplerart" src="../pictures/aaart1.jpeg"></td>
+        <td>Sample 1</td>
+        <td><div id="waveform"></div></td>
+        <td>
+            <button type="button" class="btn btn-light">Tag 1</button>
+            <button type="button" class="btn btn-light">Tag 2</button>
+        </td>
+        <td>C Major</td>
+        <td>135</td>
+        <td>
+            <i class="fas fa-plus"></i>
+            <i class="far fa-heart"></i>
+            <i class="fas fa-arrow-circle-down"></i>
+        </td>
+    </tr>
+
+    <tr>
+        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
+        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
+        <td>Sample 1</td>
+        <td><div id="waveform"></div></td>
+        <td>
+            <button type="button" class="btn btn-light">Tag 1</button>
+            <button type="button" class="btn btn-light">Tag 2</button>
+        </td>
+        <td>C Major</td>
+        <td>135</td>
+        <td>
+            <i class="fas fa-plus"></i>
+            <i class="far fa-heart"></i>
+            <i class="fas fa-arrow-circle-down"></i>
+        </td>
+    </tr>
+
+    <tr>
+        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
+        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
+        <td>Sample 1</td>
+        <td><div id="waveform"></div></td>
+        <td>
+            <button type="button" class="btn btn-light">Tag 1</button>
+            <button type="button" class="btn btn-light">Tag 2</button>
+        </td>
+        <td>C Major</td>
+        <td>135</td>
+        <td>
+            <i class="fas fa-plus"></i>
+            <i class="far fa-heart"></i>
+            <i class="fas fa-arrow-circle-down"></i>
+        </td>
+    </tr>
+
+    <tr>
+        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
+        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
+        <td>Sample 1</td>
+        <td><div id="waveform"></div></td>
+        <td>
+            <button type="button" class="btn btn-light">Tag 1</button>
+            <button type="button" class="btn btn-light">Tag 2</button>
+        </td>
+        <td>C Major</td>
+        <td>135</td>
+        <td>
+            <i class="fas fa-plus"></i>
+            <i class="far fa-heart"></i>
+            <i class="fas fa-arrow-circle-down"></i>
+        </td>
+    </tr>
+
+    <tr>
+        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
+        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
+        <td>Sample 1</td>
+        <td><div id="waveform"></div></td>
+        <td>
+            <button type="button" class="btn btn-light">Tag 1</button>
+            <button type="button" class="btn btn-light">Tag 2</button>
+        </td>
+        <td>C Major</td>
+        <td>135</td>
+        <td>
+            <i class="fas fa-plus"></i>
+            <i class="far fa-heart"></i>
+            <i class="fas fa-arrow-circle-down"></i>
+        </td>
+    </tr>
+
+    <tr>
+        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
+        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
+        <td>Sample 1</td>
+        <td><div id="waveform"></div></td>
+        <td>
+            <button type="button" class="btn btn-light">Tag 1</button>
+            <button type="button" class="btn btn-light">Tag 2</button>
+        </td>
+        <td>C Major</td>
+        <td>135</td>
+        <td>
+            <i class="fas fa-plus"></i>
+            <i class="far fa-heart"></i>
+            <i class="fas fa-arrow-circle-down"></i>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- WAVELOADER SCRIPT -->
+<script>
+    var wavesurfer = WaveSurfer.create({
+        container: document.querySelector('#waveform'),
+        waveColor: '#D9DCFF',
+        progressColor: '#4353FF',
+        cursorColor: '#4353FF',
+        barWidth: 1,
+        barRadius: 3,
+        cursorWidth: 0,
+        height: 25,
+        barGap: 2,
+        fillParent: true,
+        responsive: true
+    });
+    
+    wavesurfer.load('testsample.wav');
+</script>
                             
                         </div>
 
@@ -99,8 +353,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="../public/assets/dist/js/create.js"></script>
-    <script src="../public/assets/dist/js/loader.js"></script>
+    <script src="../assets/dist/js/create.js"></script>
+    <script src="../assets/dist/js/loader.js"></script>
 </div>
 </body>
 </html>

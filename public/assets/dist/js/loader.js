@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#dyncontent').load("sampler.ejs", function(){
+    $('#dyncontent').load("..../views/sampler.ejs", function(){
         $('#dyncontent').fadeIn('slow', function(){
         });
     });

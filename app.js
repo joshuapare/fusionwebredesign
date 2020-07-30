@@ -61,7 +61,7 @@ app.use(function(req, res, next){
 
 
 app.get("/", function(req, res){
-	res.render("index.ejs");
+	res.render("index");
 });
 
 
@@ -736,7 +736,7 @@ function isLoggedIn(req, res, next){
 // TEACH ROUTES //
 
 app.get("*", function(req, res){
-	res.render("index.ejs");
+	res.render("index");
 })
 
 const port = process.env.PORT || 3000;

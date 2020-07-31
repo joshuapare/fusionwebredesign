@@ -30,7 +30,7 @@ var express      = require("express"),
 	aws.config.region = 'us-east-1';
 
 	//BUCKET FROM ENV VARIABELS
-	const S3_BUCKET = process.env.S3_BUCKET;
+	const S3_BUCKET = process.env.S3_BUCKET_NAME;
 
 			   
 

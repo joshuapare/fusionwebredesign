@@ -200,7 +200,7 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 		console.log(filename);
 
 		// S3 Upload Prep
-		const fileContent = fs.readFileSync(filename);
+		const fileContent = fs.readFileSync(file.tempFilePath);
 
 		const params = {
 			Bucket: S3_BUCKET,

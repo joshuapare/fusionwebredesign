@@ -193,7 +193,6 @@ app.get("/submit/sample", isLoggedIn, function(req, res){
 });
 
 app.post("/submit/sample", isLoggedIn, function(req, res){
-	var awsfileurl = "NONE";
 	if(req.files) {
 		console.log(req.files);
 		var file = req.files.file;
@@ -218,94 +217,94 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 				throw err;
 			}
 			console.log(`File uploaded successfully. ${data.Location}`);
-			awsfileurl = data.Location;
-			console.log(data.Location);
-		});
-		
-		//MongoDB POST//
-		
-		var name 		= req.body.name,
-			category 	= req.body.category,
-			instrument 	= req.body.instrument,
-			tag 		= req.body.tag,
-			genre 		= req.body.genre,
-			key 		= req.body.key,
-			filePath 	= awsfileurl,
-			packName 	= req.body.packname,
-			author = {
-						id: req.user._id,
-						username: req.user.username
-					};
-	
-	function PostSample(packval){
-		Pack.find({"name": packval},function(err, foundPack){
-			if(err){
-				console.log(err);
-			} else {
 				
-				// PULL PACK IMAGE DATA//
-				var pack = foundPack;
-				var packimage = pack[0].image;
-				
-				
-				// SETUP NEW SAMPLE CREATION //
-				var newSample = {
-				name: name, 
-				category: category, 
-				instrument: instrument, 
-				tag: tag, 
-				genre: genre,
-				key: key,
-				filePath: filePath,
-				packName: packName,
-				author: author,
-				packImage: packimage,
-				};
-				
-				// CREATE SAMPLE AND PUSH TO MONGODB //
-				
-				Sample.create(newSample, function(err, newlyCreated){
+			//MongoDB POST//
+			
+			var name 	= req.body.name,
+				category 	= req.body.category,
+				instrument 	= req.body.instrument,
+				tag 		= req.body.tag,
+				genre 		= req.body.genre,
+				key 		= req.body.key,
+				filePath 	= data.Location,
+				packName 	= req.body.packname,
+				author = {
+							id: req.user._id,
+							username: req.user.username
+						};
+
+			function PostSample(packval){
+				Pack.find({"name": packval},function(err, foundPack){
 					if(err){
-						console.log("Could not create Sample");
+						console.log(err);
 					} else {
 						
-						// FIND SAMPLE IN DATABASE, GRAB ID AND INSERT INTO PACK // 
+						// PULL PACK IMAGE DATA//
+						var pack = foundPack;
+						var packimage = pack[0].image;
 						
-						Sample.find({"name": req.body.name}, function(err, foundSample){
+						
+						// SETUP NEW SAMPLE CREATION //
+						var newSample = {
+						name: name, 
+						category: category, 
+						instrument: instrument, 
+						tag: tag, 
+						genre: genre,
+						key: key,
+						filePath: filePath,
+						packName: packName,
+						author: author,
+						packImage: packimage,
+						};
+						
+						// CREATE SAMPLE AND PUSH TO MONGODB //
+						
+						Sample.create(newSample, function(err, newlyCreated){
 							if(err){
-								console.log(err);
+								console.log("Could not create Sample");
 							} else {
-								console.log(foundSample);
 								
-								// UPDATE PACK WITH SAMPLE ID //
-								Pack.findOneAndUpdate(
-								   { "name": packval }, 
-								   { $push: { samples: foundSample[0]._id } },
-								  function (error, success) {
-										if (error) {
-											console.log(error);
-										} else {
-											console.log(success);
-											res.send("SUCCESS")
-										}
-									});
+								// FIND SAMPLE IN DATABASE, GRAB ID AND INSERT INTO PACK // 
+								
+								Sample.find({"name": req.body.name}, function(err, foundSample){
+									if(err){
+										console.log(err);
+									} else {
+										console.log(foundSample);
+										
+										// UPDATE PACK WITH SAMPLE ID //
+										Pack.findOneAndUpdate(
+										{ "name": packval }, 
+										{ $push: { samples: foundSample[0]._id } },
+										function (error, success) {
+												if (error) {
+													console.log(error);
+												} else {
+													console.log(success);
+													res.send("SUCCESS")
+												}
+											});
+									}
+								});
+					// MOVE FILE FROM TEMP LOCATION TO PERMANENT LOCATION //
+
+								// file.mv("public/assets/samples/"+filename, function(err){
+								// 	if(err){
+								// 		console.log(err);
+								// 		res.send("ERROR");
+								// 	} else {
+								// 		res.send("SUCCESS");
+								// 	}
+								// });
 							}
 						});
-			// MOVE FILE FROM TEMP LOCATION TO PERMANENT LOCATION //
-
-						// file.mv("public/assets/samples/"+filename, function(err){
-						// 	if(err){
-						// 		console.log(err);
-						// 		res.send("ERROR");
-						// 	} else {
-						// 		res.send("SUCCESS");
-						// 	}
-						// });
 					}
 				});
 			}
 		});
-	}
+		
+		
 	PostSample(req.body.packname);
 }
 });

@@ -302,11 +302,9 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 					}
 				});
 			}
+			PostSample(req.body.packname);
 		});
-		
-		
-	PostSample(req.body.packname);
-}
+	}
 });
 
 // MULTITRACK SUBMISSION //

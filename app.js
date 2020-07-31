@@ -529,7 +529,7 @@ app.post("/submit/pack", isLoggedIn, function(req, res){
 						console.log(err);
 						res.send("ERROR");
 					} else {
-						res.render("SUCCESS");
+						res.send("SUCCESS");
 					}
 		});
 		}

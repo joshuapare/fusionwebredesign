@@ -199,6 +199,8 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 		var filename = file.name;
 		console.log(filename);
 
+		var awsfileurl;
+
 		const params = {
 			Bucket: S3_BUCKET,
 			Key: filename,
@@ -215,6 +217,7 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 				throw err;
 			}
 			console.log(`File uploaded successfully. ${data.Location}`);
+			awsfileurl = data.Location;
 		});
 		
 		//MongoDB POST//
@@ -225,7 +228,7 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 			tag 		= req.body.tag,
 			genre 		= req.body.genre,
 			key 		= req.body.key,
-			filePath 	= req.body.file-url,
+			filePath 	= awsfileurl,
 			packName 	= req.body.packname,
 			author = {
 						id: req.user._id,

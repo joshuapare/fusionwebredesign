@@ -9,6 +9,7 @@ var express      = require("express"),
 	upload		 = require("express-fileupload"),
 	fs		 	 = require("fs"),
 	path		 = require("path"),
+	aws			 = require("aws-sdk"),
 	
 	// INCLUDING MODELS //
 	Sample		 = require("./models/sample"),
@@ -21,7 +22,17 @@ var express      = require("express"),
 	User		 = require("./models/user"),
 	Comment		 = require("./models/comment");	
 
-	require('dotenv').config();				   
+	require('dotenv').config();	
+	
+	// AWS SETUP
+
+	//REGION
+	aws.config.region = 'us-east-1';
+
+	//BUCKET FROM ENV VARIABELS
+	const S3_BUCKET = process.env.S3_BUCKET;
+
+			   
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fusionmusicwebapp', {
 	useNewUrlParser: true,
@@ -56,9 +67,37 @@ app.use(function(req, res, next){
 	next();
 });
 
+//AWS SIGNing
+
+app.get('/sign-s3', (req, res) => {
+	const s3 = new aws.S3();
+	const fileName = req.query['file-name'];
+	const fileType = req.query['file-type'];
+	const s3Params = {
+	  Bucket: S3_BUCKET,
+	  Key: fileName,
+	  Expires: 60,
+	  ContentType: fileType,
+	  ACL: 'public-read'
+	};
+  
+	s3.getSignedUrl('putObject', s3Params, (err, data) => {
+	  if(err){
+		console.log(err);
+		return res.end();
+	  }
+	  const returnData = {
+		signedRequest: data,
+		url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
+	  };
+	  res.write(JSON.stringify(returnData));
+	  res.end();
+	});
+});
 
 
 
+// MAIN ROUTE
 
 
 app.get("/", function(req, res){
@@ -159,6 +198,22 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 		var file = req.files.file;
 		var filename = file.name;
 		console.log(filename);
+
+		// S3 Upload Prep
+		const fileContent = fs.readFileSync(file);
+
+		const params = {
+			Bucket: S3_BUCKET,
+			Key: filename,
+			Body: fileContent
+		};
+
+		s3.upload(params, function(err, data) {
+			if (err) {
+				throw err;
+			}
+			console.log(`File uploaded successfully. ${data.Location}`);
+		});
 		
 		//MongoDB POST//
 		
@@ -168,7 +223,7 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 			tag 		= req.body.tag,
 			genre 		= req.body.genre,
 			key 		= req.body.key,
-			filePath 	= "/assets/samples/"+filename,
+			filePath 	= req.body.file-url,
 			packName 	= req.body.packname,
 			author = {
 						id: req.user._id,
@@ -200,14 +255,14 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 				packImage: packimage,
 				};
 				
-				// CREATE SAMPLE ADN PUSH TO MONGODB //
+				// CREATE SAMPLE AND PUSH TO MONGODB //
 				
 				Sample.create(newSample, function(err, newlyCreated){
 					if(err){
 						console.log("Could not create Sample");
 					} else {
 						
-						// FIND SAMPLE IN DATABASE, GRAB ID AND INSER INTO PACK // 
+						// FIND SAMPLE IN DATABASE, GRAB ID AND INSERT INTO PACK // 
 						
 						Sample.find({"name": req.body.name}, function(err, foundSample){
 							if(err){
@@ -230,14 +285,14 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 						});
 			// MOVE FILE FROM TEMP LOCATION TO PERMANENT LOCATION //
 
-						file.mv("public/assets/samples/"+filename, function(err){
-							if(err){
-								console.log(err);
-								res.send("ERROR");
-							} else {
-								res.send("SUCCESS");
-							}
-						});
+						// file.mv("public/assets/samples/"+filename, function(err){
+						// 	if(err){
+						// 		console.log(err);
+						// 		res.send("ERROR");
+						// 	} else {
+						// 		res.send("SUCCESS");
+						// 	}
+						// });
 					}
 				});
 			}

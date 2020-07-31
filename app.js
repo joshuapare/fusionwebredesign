@@ -193,13 +193,14 @@ app.get("/submit/sample", isLoggedIn, function(req, res){
 });
 
 app.post("/submit/sample", isLoggedIn, function(req, res){
+	var awsfileurl = "NONE";
 	if(req.files) {
 		console.log(req.files);
 		var file = req.files.file;
 		var filename = file.name;
 		console.log(filename);
 
-		var awsfileurl;
+		
 
 		const params = {
 			Bucket: S3_BUCKET,
@@ -218,6 +219,7 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 			}
 			console.log(`File uploaded successfully. ${data.Location}`);
 			awsfileurl = data.Location;
+			console.log(data.Location);
 		});
 		
 		//MongoDB POST//
@@ -284,6 +286,7 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 											console.log(error);
 										} else {
 											console.log(success);
+											res.send("SUCCESS")
 										}
 									});
 							}

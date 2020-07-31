@@ -65,10 +65,6 @@ app.get("/", function(req, res){
 	res.render("index");
 });
 
-
-
-
-
 // USER ROUTES //
 
 app.get("/user/:id", function(req, res){
@@ -77,21 +73,17 @@ app.get("/user/:id", function(req, res){
 
 // CREATE ROUTES//
 
-app.get("/create", function(req, res){
-	res.render("create.ejs");
-});
-
-app.get("/create/samples", function(req, res){
+app.get("/samples", function(req, res){
 	Sample.find({},function(err, allSamples){
 		if(err){
 			console.log(err);
 		} else {
-			res.render("samples.ejs",{samples:allSamples});
+			res.render("samples.ejs",{samples:allSamples},{loops:allLoops});
 		}
 	})
 });
 
-app.get("/create/loops", function(req, res){
+app.get("/loops", function(req, res){
 	Loop.find({},function(err, allLoops){
 		if(err){
 			console.log(err);
@@ -101,7 +93,7 @@ app.get("/create/loops", function(req, res){
 	})
 });
 
-app.get("/create/multitracks", function(req, res){
+app.get("/multitracks", function(req, res){
 	Multitrack.find({},function(err, allMultitracks){
 		if(err){
 			console.log(err);
@@ -111,7 +103,7 @@ app.get("/create/multitracks", function(req, res){
 	})
 });
 
-app.get("/create/midi", function(req, res){
+app.get("/midi", function(req, res){
 	Midi.find({},function(err, allMidis){
 		if(err){
 			console.log(err);
@@ -121,7 +113,7 @@ app.get("/create/midi", function(req, res){
 	})
 });
 
-app.get("/create/presets", function(req, res){
+app.get("/presets", function(req, res){
 	Preset.find({},function(err, allPresets){
 		if(err){
 			console.log(err);
@@ -131,7 +123,7 @@ app.get("/create/presets", function(req, res){
 	})
 });
 
-app.get("/create/plugins", function(req, res){
+app.get("/plugins", function(req, res){
 	Plugin.find({},function(err, allPlugins){
 		if(err){
 			console.log(err);
@@ -143,7 +135,7 @@ app.get("/create/plugins", function(req, res){
 
 // SUBMIT PAGE // 
 
-app.get("/create/submit", function(req, res){
+app.get("/submit", function(req, res){
 	res.render("submit.ejs");
 });
 
@@ -151,7 +143,7 @@ app.get("/create/submit", function(req, res){
 // SAMPLE SUBMISSION //
 
 
-app.get("/create/submit/sample", isLoggedIn, function(req, res){
+app.get("/submit/sample", isLoggedIn, function(req, res){
 	Pack.find({},function(err, allPacks){
 		if(err){
 			console.log(err);
@@ -161,7 +153,7 @@ app.get("/create/submit/sample", isLoggedIn, function(req, res){
 	})
 });
 
-app.post("/create/submit/sample", isLoggedIn, function(req, res){
+app.post("/submit/sample", isLoggedIn, function(req, res){
 	if(req.files) {
 		console.log(req.files);
 		var file = req.files.file;
@@ -257,11 +249,11 @@ app.post("/create/submit/sample", isLoggedIn, function(req, res){
 
 // MULTITRACK SUBMISSION //
 
-app.get("/create/submit/multitrack", isLoggedIn, function(req, res){
+app.get("/submit/multitrack", isLoggedIn, function(req, res){
 	res.render("submit-multitrack.ejs");
 });
 
-app.post("/create/submit/multitrack", isLoggedIn, function(req, res){
+app.post("/submit/multitrack", isLoggedIn, function(req, res){
 	if(req.files) {
 		console.log(req.files);
 		var exampleFile = req.files.examplefile,
@@ -492,18 +484,18 @@ app.post("/create/submit/multitrack", isLoggedIn, function(req, res){
 					});
 					}
 					
-				res.render("success.ejs");				
+				res.send("SUCCESS");				
 				}
 		});
 		}
 });	
 
 // PACK SUBMISSION //
-app.get("/create/submit/pack", isLoggedIn, function(req, res){
+app.get("/submit/pack", isLoggedIn, function(req, res){
 	res.render("submit-pack");
 });
 
-app.post("/create/submit/pack", isLoggedIn, function(req, res){
+app.post("/submit/pack", isLoggedIn, function(req, res){
 		if(req.files) {
 		console.log(req.files);
 		var file = req.files.file;
@@ -547,7 +539,7 @@ app.post("/create/submit/pack", isLoggedIn, function(req, res){
 
 // LOOP SUBMISSION // 
 
-app.get("/create/submit/loop", isLoggedIn, function(req, res){
+app.get("/submit/loop", isLoggedIn, function(req, res){
 	Pack.find({},function(err, allPacks){
 		if(err){
 			console.log(err);
@@ -557,7 +549,7 @@ app.get("/create/submit/loop", isLoggedIn, function(req, res){
 	})
 });
 
-app.post("/create/submit/loop", isLoggedIn, function(req, res){
+app.post("/submit/loop", isLoggedIn, function(req, res){
 	if(req.files) {
 		console.log(req.files);
 		var file = req.files.file;
@@ -704,7 +696,7 @@ app.get("/login", function(req, res){
 })
 
 app.post("/login", passport.authenticate("local", {
-	successRedirect: "/create",
+	successRedirect: "/",
 	failureRedirect: "/login"}), function(req, res){
 });
 
@@ -712,10 +704,6 @@ app.get("/logout", function(req, res){
 	req.logout();
 	res.redirect("/create");
 });
-
-// router.get("*", function(req, res){
-// 	res.send("Page Not Found. Bad Gateway Error.");
-// });
 
 //MIDDLEWARE FUNCTION
 function isLoggedIn(req, res, next){

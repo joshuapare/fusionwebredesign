@@ -172,169 +172,53 @@
     </tr>
     </thead>
     <tbody>
+        <% for (var i=0; i < samples.length; i++) { %>
     <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
+        <td><i class="fas fa-play" onclick="waveforms[i].play()"></i></td>
         <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
         <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
+        <td><div id="<%= samples[i].keyid %>"></div></td>
         <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
+            <button type="button" class="btn btn-light"><%= samples[i].instrument %></button>
+            <button type="button" class="btn btn-light"><%= samples[i].genre %></button>
         </td>
-        <td>C Major</td>
-        <td>135</td>
+        <td><%= samples[i].key %></td>
+        <td><%= samples[i].bpm %></td>
         <td>
             <i class="fas fa-plus"></i>
             <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
+            <a href="<%= samples[i].filePath %>" ><i class="fas fa-arrow-circle-down"></i></a>
         </td>
     </tr>
 
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="../pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
-
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="../pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
-
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
-
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
-
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
-
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
-
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
+    
     </tbody>
 </table>
 
 <!-- WAVELOADER SCRIPT -->
 <script>
-    var wavesurfer = WaveSurfer.create({
-        container: document.querySelector('#waveform'),
-        waveColor: '#D9DCFF',
-        progressColor: '#4353FF',
-        cursorColor: '#4353FF',
-        barWidth: 1,
-        barRadius: 3,
-        cursorWidth: 0,
-        height: 25,
-        barGap: 2,
-        fillParent: true,
-        responsive: true
-    });
+
+var waveforms = [];
+
+for (var i = 0; i < samples.length; ++i){
+
+    waveforms[i] = WaveSurfer.create({
+                        container: '#'+ samples[i].keyid,
+                        waveColor: '#D9DCFF',
+                        progressColor: '#4353FF',
+                        cursorColor: '#4353FF',
+                        barWidth: 1,
+                        barRadius: 3,
+                        cursorWidth: 0,
+                        height: 25,
+                        barGap: 2,
+                        fillParent: true,
+                        responsive: true
+                    });
     
-    wavesurfer.load('testsample.wav');
+    waveforms[i].load(samples[i].filePath);
+
+}
 </script>
                             
                         </div>

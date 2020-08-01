@@ -10,6 +10,7 @@ var express      = require("express"),
 	fs		 	 = require("fs"),
 	path		 = require("path"),
 	aws			 = require("aws-sdk"),
+	nanoid		 = require("nanoid"),
 	
 	// INCLUDING MODELS //
 	Sample		 = require("./models/sample"),
@@ -101,7 +102,13 @@ app.get('/sign-s3', (req, res) => {
 
 
 app.get("/", function(req, res){
-	res.render("index");
+	Sample.find({},function(err, allSamples){
+		if(err){
+			console.log(err);
+		} else {
+			res.render("index",{samples:allSamples});
+		}
+	})
 });
 
 // USER ROUTES //
@@ -117,7 +124,7 @@ app.get("/samples", function(req, res){
 		if(err){
 			console.log(err);
 		} else {
-			res.render("samples.ejs",{samples:allSamples},{loops:allLoops});
+			res.render("index",{samples:allSamples});
 		}
 	})
 });
@@ -220,7 +227,8 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 				
 			//MongoDB POST//
 			
-			var name 	= req.body.name,
+			var name 		= req.body.name,
+				keyid		= "s" + nanoid.nanoid,
 				category 	= req.body.category,
 				instrument 	= req.body.instrument,
 				tag 		= req.body.tag,
@@ -247,6 +255,7 @@ app.post("/submit/sample", isLoggedIn, function(req, res){
 						// SETUP NEW SAMPLE CREATION //
 						var newSample = {
 						name: name, 
+						keyid: keyid,
 						category: category, 
 						instrument: instrument, 
 						tag: tag, 

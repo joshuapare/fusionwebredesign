@@ -30,6 +30,13 @@ var UserSchema = new mongoose.Schema({
 		}
 	],
 	
+	collections: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "Collection"
+		}
+	
+	],
 	
 	// FAVORITES
 	
@@ -77,4 +84,6 @@ var UserSchema = new mongoose.Schema({
 
 UserSchema.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model("User", UserSchema);
+var User = mongoose.model("User", UserSchema);
+
+module.exports = User;

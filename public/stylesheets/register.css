@@ -37,7 +37,9 @@ body {
   }
   
   #userimage {
-      max-height: 13rem;
+      height: 13rem;
+      width: 13rem;
+      border-radius: 50%;
   }
 
   #campus {

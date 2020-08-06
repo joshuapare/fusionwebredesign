@@ -3,45 +3,57 @@ var express      = require("express"),
 	bodyParser   = require("body-parser"),
 	mongoose     = require("mongoose"),
 	passport	 = require("passport"),
-	LocalStrategy= require("passport-local"),
+	LocalStrategy = require("passport-local"),
 	Schema		 = mongoose.Schema,
 	methodOverride= require("method-override"),
 	upload		 = require("express-fileupload"),
 	fs		 	 = require("fs"),
-	path		 = require("path"),
-	aws			 = require("aws-sdk"),
-	nanoid		 = require("nanoid"),
-	
-	// INCLUDING MODELS //
-	Sample		 = require("./models/sample"),
-	Midi		 = require("./models/midi"),
-	Pack		 = require("./models/pack"),
-	Preset		 = require("./models/preset"),
-	Loop		 = require("./models/loop"),
-	Multitrack	 = require("./models/multitrack"),
-	
-	User		 = require("./models/user"),
-	Comment		 = require("./models/comment");	
+	aws			 = require("aws-sdk");
 
 	require('dotenv').config();	
-	
-	// AWS SETUP
 
-	//REGION
+// AWS SETUP
+
 	aws.config.region = 'us-east-1';
 
-	//BUCKET FROM ENV VARIABELS
+	//BUCKET FROM HEROKU
 	const S3_BUCKET = process.env.S3_BUCKET_NAME;
 
-			   
+	// //BUCKET FROM LOCAL
+	// const S3_BUCKET = 'fusionwebredesign-assets';
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fusionmusicwebapp', {
+	
+// INCLUDING MODELS //
+	var	User		 = require("./models/user"),
+		Comment		 = require("./models/comment"),
+		Pack		 = require("./models/pack"),
+		Collection   = require("./models/collection"),
+
+// ROUTES //
+	sampleRoutes = require("./routes/samples"),
+	packRoutes = require("./routes/packs"),
+	userRoutes = require("./routes/users");
+	
+			   
+// DEPLOYMENT MONGODB CONNECTION
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fusionwebredesign', {
 	useNewUrlParser: true,
 	useFindAndModify: false,
 	useCreateIndex: true,
 	useUnifiedTopology: true
 });
 
+
+// LOCAL TESTING MONGODB CONNECTION
+// mongoose.connect('mongodb://127.0.0.1/fusionwebredesign', {
+// 	useNewUrlParser: true,
+// 	useFindAndModify: false,
+// 	useCreateIndex: true,
+// 	useUnifiedTopology: true
+// });
+
+
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -68,7 +80,7 @@ app.use(function(req, res, next){
 	next();
 });
 
-//AWS SIGNing
+//AWS SIGNING
 
 app.get('/sign-s3', (req, res) => {
 	const s3 = new aws.S3();
@@ -81,9 +93,14 @@ app.get('/sign-s3', (req, res) => {
 	  ContentType: fileType,
 	  ACL: 'public-read'
 	};
+
+	console.log(fileName);
+	console.log(fileType);
+	console.log(s3Params);
   
 	s3.getSignedUrl('putObject', s3Params, (err, data) => {
 	  if(err){
+		console.log(err);
 		console.log(err);
 		return res.end();
 	  }
@@ -91,8 +108,10 @@ app.get('/sign-s3', (req, res) => {
 		signedRequest: data,
 		url: `https://${S3_BUCKET}.s3.amazonaws.com/${fileName}`
 	  };
+	  console.log("SUCCESSFUL getSIGNEDURL");
 	  res.write(JSON.stringify(returnData));
 	  res.end();
+	  
 	});
 });
 
@@ -102,81 +121,21 @@ app.get('/sign-s3', (req, res) => {
 
 
 app.get("/", function(req, res){
-	Sample.find({},function(err, allSamples){
-		if(err){
-			console.log(err);
-		} else {
-			res.render("index",{samples:allSamples});
-		}
-	})
+	res.render("index");
 });
+
+// API ROUTES
+
+app.use('/api/samples', sampleRoutes);
+app.use('/api/packs', packRoutes);
+app.use('/api/users', userRoutes);
+
+
 
 // USER ROUTES //
 
 app.get("/user/:id", function(req, res){
 	res.render("user.ejs");
-});
-
-// CREATE ROUTES//
-
-app.get("/samples", function(req, res){
-	Sample.find({},function(err, allSamples){
-		if(err){
-			console.log(err);
-		} else {
-			res.render("index",{samples:allSamples});
-		}
-	})
-});
-
-app.get("/loops", function(req, res){
-	Loop.find({},function(err, allLoops){
-		if(err){
-			console.log(err);
-		} else {
-			res.render("loops.ejs",{loops:allLoops});
-		}
-	})
-});
-
-app.get("/multitracks", function(req, res){
-	Multitrack.find({},function(err, allMultitracks){
-		if(err){
-			console.log(err);
-		} else {
-			res.render("multitracks.ejs",{multitracks:allMultitracks});
-		}
-	})
-});
-
-app.get("/midi", function(req, res){
-	Midi.find({},function(err, allMidis){
-		if(err){
-			console.log(err);
-		} else {
-			res.render("midi.ejs",{midi:allMidis});
-		}
-	})
-});
-
-app.get("/presets", function(req, res){
-	Preset.find({},function(err, allPresets){
-		if(err){
-			console.log(err);
-		} else {
-			res.render("presets.ejs",{preset:allPresets});
-		}
-	})
-});
-
-app.get("/plugins", function(req, res){
-	Plugin.find({},function(err, allPlugins){
-		if(err){
-			console.log(err);
-		} else {
-			res.render("plugins.ejs",{plugins:allPlugins});
-		}
-	})
 });
 
 // SUBMIT PAGE // 
@@ -197,123 +156,6 @@ app.get("/submit/sample", isLoggedIn, function(req, res){
 			res.render("submit-sample",{packs:allPacks});
 		}
 	})
-});
-
-app.post("/submit/sample", isLoggedIn, function(req, res){
-	if(req.files) {
-		console.log(req.files);
-		var file = req.files.file;
-		var filename = file.name;
-		console.log(filename);
-
-		
-
-		const params = {
-			Bucket: S3_BUCKET,
-			Key: filename,
-			Body: file.data
-		};
-
-		const s3 = new aws.S3({
-			accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-			secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-		});
-
-		s3.upload(params, function(err, data) {
-			if (err) {
-				throw err;
-			}
-			console.log(`File uploaded successfully. ${data.Location}`);
-				
-			//MongoDB POST//
-			
-			var name 		= req.body.name,
-				keyid		= "s" + nanoid.nanoid,
-				category 	= req.body.category,
-				instrument 	= req.body.instrument,
-				tag 		= req.body.tag,
-				genre 		= req.body.genre,
-				key 		= req.body.key,
-				filePath 	= data.Location,
-				packName 	= req.body.packname,
-				author = {
-							id: req.user._id,
-							username: req.user.username
-						};
-
-			function PostSample(packval){
-				Pack.find({"name": packval},function(err, foundPack){
-					if(err){
-						console.log(err);
-					} else {
-						
-						// PULL PACK IMAGE DATA//
-						var pack = foundPack;
-						var packimage = pack[0].image;
-						
-						
-						// SETUP NEW SAMPLE CREATION //
-						var newSample = {
-						name: name, 
-						keyid: keyid,
-						category: category, 
-						instrument: instrument, 
-						tag: tag, 
-						genre: genre,
-						key: key,
-						filePath: filePath,
-						packName: packName,
-						author: author,
-						packImage: packimage,
-						};
-						
-						// CREATE SAMPLE AND PUSH TO MONGODB //
-						
-						Sample.create(newSample, function(err, newlyCreated){
-							if(err){
-								console.log("Could not create Sample");
-							} else {
-								
-								// FIND SAMPLE IN DATABASE, GRAB ID AND INSERT INTO PACK // 
-								
-								Sample.find({"name": req.body.name}, function(err, foundSample){
-									if(err){
-										console.log(err);
-									} else {
-										console.log(foundSample);
-										
-										// UPDATE PACK WITH SAMPLE ID //
-										Pack.findOneAndUpdate(
-										{ "name": packval }, 
-										{ $push: { samples: foundSample[0]._id } },
-										function (error, success) {
-												if (error) {
-													console.log(error);
-												} else {
-													console.log(success);
-													res.send("SUCCESS")
-												}
-											});
-									}
-								});
-					// MOVE FILE FROM TEMP LOCATION TO PERMANENT LOCATION //
-
-								// file.mv("public/assets/samples/"+filename, function(err){
-								// 	if(err){
-								// 		console.log(err);
-								// 		res.send("ERROR");
-								// 	} else {
-								// 		res.send("SUCCESS");
-								// 	}
-								// });
-							}
-						});
-					}
-				});
-			}
-			PostSample(req.body.packname);
-		});
-	}
 });
 
 // MULTITRACK SUBMISSION //
@@ -562,48 +404,6 @@ app.post("/submit/multitrack", isLoggedIn, function(req, res){
 // PACK SUBMISSION //
 app.get("/submit/pack", isLoggedIn, function(req, res){
 	res.render("submit-pack");
-});
-
-app.post("/submit/pack", isLoggedIn, function(req, res){
-		if(req.files) {
-		console.log(req.files);
-		var file = req.files.file;
-		var filename = file.name;
-		console.log(filename);
-		
-		//MongoDB POST//
-		
-		var name 		= req.body.name,
-			description = req.body.description,
-			author = {
-						id: req.user._id,
-						username: req.user.username
-					},
-			image 		= "/pictures/pack/"+filename;
-		
-		var newPack = {
-			name: name,
-			description: description,
-			image: image,
-			author: author
-		};
-			
-		Pack.create(newPack, function(err, newlyCreated){
-				if(err){
-					console.log("Could not create Pack");
-				} else {
-
-					file.mv("public/pictures/pack/"+filename, function(err){
-					if(err){
-						console.log(err);
-						res.send("ERROR");
-					} else {
-						res.send("SUCCESS");
-					}
-		});
-		}
-	});
-	}
 });
 
 // LOOP SUBMISSION // 

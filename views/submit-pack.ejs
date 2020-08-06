@@ -13,83 +13,130 @@
 <body class="text-center">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-    <div class="container">
-      <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="/pictures/circle-logo.png" alt="" width="72" height="72">
-        <h2>Submit Your Work</h2>
-        <p class="lead">This is the time to share your work! If you have samples, loops, or projects you have created that you want to share, please use the form below to submit your own work!</p>
-		  <p>
-			  Submissions will be screened before being posted. Please remember to adhere to the Community Guidelines. Submissions innappropriate to the use of this site will not be approved, and innapropriate use of this form and site will result in termination of your account.
-		  </p>
-      </div>
-		
-	<div class="d-flex justify-content-center">
-		<nav aria-label="...">
-		  <ul class="pagination pagination-lg">
-			<li class="page-item"><a class="page-link" href="sample">Sample</a></li>
-			<li class="page-item"><a class="page-link" href="loop">Loop</a></li>
-			<li class="page-item"><a class="page-link" href="multitrack">Multitrack</a></li>
-			<li class="page-item"><a class="page-link" href="midi" disabled>MIDI</a></li>
-			<li class="page-item"><a class="page-link" href="preset" disabled>Preset</a></li>
-			<li class="page-item"><a class="page-link" href="plugin" disabled>Plugin</a></li>
-			<li class="page-item active" aria-current="page">
-      			<a class="page-link" href="pack">Pack<span class="sr-only">(current)</span></a>
-    		</li>
-		  </ul>
-		</nav>
-	</div>
+      <main role="main" class="submissionarea">
+        <a href="/"><i class="fas fa-arrow-left"></i></a>
+          <div class="container">
+            <div class="py-5 text-center">
+              <img class="d-block mx-auto mb-4" src="/pictures/circle-logo.png" alt="" width="72" height="72">
+              <h2>Submit Your Work</h2>
+              <p class="lead">This is the time to share your work! If you have samples, loops, or projects you have created that you want to share, please use the form below to submit your own work!</p>
+            <p>
+              All submissions are screened. Please remember to adhere to the Community Guidelines. Innappropriate use of this site or this form will result in termination of your account.
+            </p>
+            <div id="alert"></div>
+            </div>
+        
+        <div class="d-flex justify-content-center">
+          <nav class="nav nav-masthead justify-content-center">
+            <a class="nav-link active" id="packs" href="/submit/pack">Packs</a>
+            <a class="nav-link" id="samples" href="/submit/sample">Samples</a>
+            <a class="nav-link" id="loops" href="/submit/loop">Loops</a>
+            <a class="nav-link" id="midi" href="/submit/midi">MIDI</a>
+            <a class="nav-link" id="multitracks" href="/submit/multitrack">Multitracks</a>
+            <a class="nav-link" id="presets" href="/submit/preset">Presets</a>
+            <a class="nav-link" id="plugins" href="/submit/plugin">Plugins</a>
+          </nav>
+        </div>
       
-		<div class="row">
-
+		  <div class="row">
         <div class="col-md-12 order-md-1">
           <h4 class="mb-3">Pack Info</h4>
-          <form method="POST" action="/submit/pack" enctype="multipart/form-data">
+          <section class="form">
             <div class="row">
               <div class="col-md-12 mb-3">
                 <label for="name">Pack Name</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="" value="" required>
                 <div class="invalid-feedback">
-                  Valid sample name is required.
+                  Valid pack name is required.
                 </div>
               </div>
             </div>
-			<div class="row">
-				
-			  <div class="col-md-12 mb-3">
+            
+            <div class="row">
+              <div class="col-md-12 mb-3">
                 <label for="description">Description</label>
-				  <textarea type="text" class="form-control" id="description" name="description" rows="3" placeholder="" value="" required></textarea>
+                <textarea type="text" class="form-control" id="description" name="description" rows="3" placeholder="" value="" required></textarea>
                 <div class="invalid-feedback">
                   Description is required.
                 </div>
               </div>
-			</div>
-				
-				<h4 class="mb-3">Image Upload</h4>
-			  <div class="form-group">
-				<img src="/pictures/foldericon.png" class="sampleart">
-				<label for="imagefile">Image</label>
-				<input type="file" class="form-control-file" id="imagefile" name="file" onchange="return fileValidation()" required />
-			  </div>
-            
+            </div>
+          
+            <h4 class="mb-3">Image Upload</h4>
+            <div class="form-group">
+              <label for="imagefile">Image</label>
+              <input type="file" class="form-control-file" id="imagefile" name="file" required />
+            </div>
+              
             <hr class="mb-4">
-            <input class="btn btn-primary btn-lg btn-block" type="submit" value="Submit Pack" id="samplesubmit">
-          </form>
+            <button class="btn btn-primary btn-lg btn-block" id="packSubmit">Submit Pack</button>
+          </section>
         </div>
       </div>
-
-      <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2020- Joshua Pare</p>
-        <ul class="list-inline">
-          <li class="list-inline-item"><a href="#">Privacy</a></li>
-          <li class="list-inline-item"><a href="#">Terms</a></li>
-          <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
-      </footer>
     </div>
 </main>
+<footer class="mastfoot mt-auto">
+  <h6>&copy; Joshua Pare </h6>
+</footer>
 
 <script> 
+/*
+    Function to carry out the actual PUT request to S3 using the signed request from the app.
+  */
+  function uploadFile(file, signedRequest, url){
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', signedRequest);
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200){
+          document.getElementById('file-url').value = url;
+        }
+        else{
+          alert('Could not upload file.');
+        }
+      }
+    };
+    xhr.send(file);
+  }
+
+  /*
+    Function to get the temporary signed request from the app.
+    If request successful, continue to upload the file using this signed
+    request.
+  */
+  function getSignedRequest(file){
+    const encFileName = encodeURIComponent(file.name);
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `/sign-s3?file-name=${encFileName}&file-type=${file.type}`);
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200){
+          const response = JSON.parse(xhr.responseText);
+          uploadFile(file, response.signedRequest, response.url);
+        }
+        else{
+          alert('Could not get signed URL.');
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  /*
+   Function called when file input updated. If there is a file selected, then
+   start upload procedure by asking for a signed request from the app.
+  */
+  function initUpload(){
+    const files = document.getElementById('imagefile').files;
+    const file = files[0];
+    if(file == null){
+      return alert('No file selected.');
+    }
+    getSignedRequest(file);
+  }
+
+  // File Validation
+
         function fileValidation() { 
             var fileInput =  
                 document.getElementById('imagefile'); 
@@ -104,14 +151,19 @@
                 alert('Invalid file type'); 
                 fileInput.value = ''; 
                 return false; 
-            }  
+            }  else {
+              initUpload();
+            }
         } 
-</script> 
 
-<!-- Footer -->
-<footer class="mastfoot mt-auto">
-  <h6>&copy; Joshua Pare </h6>
-</footer>
+  /*
+   Bind listeners when the page loads.
+  */
+  (() => {
+      document.getElementById('imagefile').onchange = fileValidation;
+  })();
+
+</script> 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

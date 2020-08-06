@@ -18,9 +18,15 @@ var sampleSchema = new mongoose.Schema({
 		username: String
 	},
 	
-	packImage: String
+	packImage: String,
+	created_date: {
+		type: Date,
+		default: Date.now
+	}
 	
 	
 });
 
-module.exports = mongoose.model("Sample", sampleSchema);
+var Sample = mongoose.model("Sample", sampleSchema);
+
+module.exports = Sample;

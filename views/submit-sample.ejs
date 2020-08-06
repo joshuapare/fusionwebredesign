@@ -7,104 +7,98 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../stylesheets/create.css">
     <script src="https://kit.fontawesome.com/023edff769.js" crossorigin="anonymous"></script></head>
-
-    <script src="https://unpkg.com/wavesurfer.js"></script>
     
 <body class="text-center">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
-<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+<main role="main" class="submissionarea">
+  <a href="/"><i class="fas fa-arrow-left"></i></a>
     <div class="container">
       <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="/pictures/circle-logo.png" alt="" width="72" height="72">
         <h2>Submit Your Work</h2>
         <p class="lead">This is the time to share your work! If you have samples, loops, or projects you have created that you want to share, please use the form below to submit your own work!</p>
 		  <p>
-			  Submissions will be screened before being posted. Please remember to adhere to the Community Guidelines. Submissions innappropriate to the use of this site will not be approved, and innapropriate use of this form and site will result in termination of your account.
-		  </p>
+			  All submissions are screened. Please remember to adhere to the Community Guidelines. Innappropriate use of this site or this form will result in termination of your account.
+      </p>
+      <div id="alert"></div>
       </div>
 	
 	<div class="d-flex justify-content-center">
-		<nav aria-label="...">
-		  <ul class="pagination pagination-lg">
-			<li class="page-item active" aria-current="page">
-      			<a class="page-link" href="sample">Sample<span class="sr-only">(current)</span></a>
-    		</li>
-			<li class="page-item"><a class="page-link" href="loop">Loop</a></li>
-			<li class="page-item"><a class="page-link" href="multitrack">Multitrack</a></li>
-			<li class="page-item"><a class="page-link" href="midi" disabled>MIDI</a></li>
-			<li class="page-item"><a class="page-link" href="preset" disabled>Preset</a></li>
-			<li class="page-item"><a class="page-link" href="plugin" disabled>Plugin</a></li>
-			<li class="page-item"><a class="page-link" href="pack" disabled>Pack</a></li>
-		  </ul>
-		</nav>
+		<nav class="nav nav-masthead justify-content-center">
+      <a class="nav-link " id="packs" href="/submit/pack">Packs</a>
+      <a class="nav-link active" id="samples" href="/submit/sample">Samples</a>
+      <a class="nav-link" id="loops" href="/submit/loop">Loops</a>
+      <a class="nav-link" id="midi" href="/submit/midi">MIDI</a>
+      <a class="nav-link" id="multitracks" href="/submit/multitrack">Multitracks</a>
+      <a class="nav-link" id="presets" href="/submit/preset">Presets</a>
+      <a class="nav-link" id="plugins" href="/submit/plugin">Plugins</a>
+    </nav>
 	</div>
 		
       <div class="row">
 
         <div class="col-md-12 order-md-1">
-          <h4 class="mb-3">Sample Info</h4>
-          <form method="POST" action="/submit/sample" enctype="multipart/form-data">
-            <div class="row">
-              <div class="col-md-12 mb-3">
-                <label for="samplename">Sample Name</label>
-                <input type="text" class="form-control" id="samplename" name="name" placeholder="" value="" required>
-                <div class="invalid-feedback">
-                  Valid sample name is required.
-                </div>
+          <h4 class="mb-3"> </h4>
+          <section class="form">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="samplename">Sample Name</label>
+              <input type="text" class="form-control" id="samplename" name="name" placeholder="" value="" required>
+              <div class="invalid-feedback">
+                Valid sample name is required.
               </div>
             </div>
-			<div class="row">
-				<div class="col-md-5 mb-3">
-                <label for="key">Key</label>
-                <select class="custom-select d-block w-100" id="key" name="key" required>
-                  	<option value="">Choose...</option>
-					<option>None</option>
-                  	<option>C Major</option>
-					<option>C#/Db Major</option>
-					<option>D Major</option>
-					<option>D#/Eb Major</option>
-					<option>E Major</option>
-					<option>F Major</option>
-					<option>F#/Gb Major</option>
-					<option>G Major</option>
-					<option>G#/Ab Major</option>
-					<option>A Major</option>
-					<option>A#/Bb Major</option>
-					<option>B Major</option>
-					<div class="dropdown-divider"></div>
-					<option>C Minor</option>
-					<option>C#/Db Minor</option>
-					<option>D Minor</option>
-					<option>D#/Eb Minor</option>
-					<option>E Minor</option>
-					<option>F Minor</option>
-					<option>F#/Gb Minor</option>
-					<option>G Minor</option>
-					<option>G#/Ab Minor</option>
-					<option>A Minor</option>
-					<option>A#/Bb Minor</option>
-					<option>B Minor</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please provide a valid key.
-                </div>
-              </div>
-			  <div class="col-md-7 mb-3">
-                <label for="packname">Pack</label>
-                <select class="custom-select d-block w-100" id="packname" name="packname" required>
-                  <option value="">Choose...</option>
-					<% for(var i=0; i < packs.length; i++){ %>
-					<% if(packs[i].author.username == currentUser.username) { %>
-						<option><%= packs[i].name %></option>
-					<% } %>
-					<% } %>
-				  </select>
-                <div class="invalid-feedback">
-                  Valid pack name is required.
-                </div>
-              </div>
-			</div>
+            <div class="col-md-3 mb-3">
+                    <label for="key">Key</label>
+                    <select class="custom-select d-block w-100" id="key" name="key" required>
+                        <option value="">Choose...</option>
+              <option>None</option>
+                        <option>C Major</option>
+              <option>C#/Db Major</option>
+              <option>D Major</option>
+              <option>D#/Eb Major</option>
+              <option>E Major</option>
+              <option>F Major</option>
+              <option>F#/Gb Major</option>
+              <option>G Major</option>
+              <option>G#/Ab Major</option>
+              <option>A Major</option>
+              <option>A#/Bb Major</option>
+              <option>B Major</option>
+              <div class="dropdown-divider"></div>
+              <option>C Minor</option>
+              <option>C#/Db Minor</option>
+              <option>D Minor</option>
+              <option>D#/Eb Minor</option>
+              <option>E Minor</option>
+              <option>F Minor</option>
+              <option>F#/Gb Minor</option>
+              <option>G Minor</option>
+              <option>G#/Ab Minor</option>
+              <option>A Minor</option>
+              <option>A#/Bb Minor</option>
+              <option>B Minor</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please provide a valid key.
+                    </div>
+                  </div>
+            <div class="col-md-3 mb-3">
+                    <label for="packname">Pack</label>
+                    <select class="custom-select d-block w-100" id="packname" name="packname" required>
+                      <option value="">Choose...</option>
+              <% for(var i=0; i < packs.length; i++){ %>
+              <% if(packs[i].author.username == currentUser.username) { %>
+                <option><%= packs[i].name %></option>
+              <% } %>
+              <% } %>
+              </select>
+                    <div class="invalid-feedback">
+                      Valid pack name is required.
+                    </div>
+                  </div>
+          </div>
 				
 
             <div class="row">
@@ -140,50 +134,21 @@
                 </div>
               </div>
             </div>
-				<h4 class="mb-3">File Upload <span><h6>
-				  </h6></span></h4>
 			  <div class="form-group">
-				<img src="/pictures/foldericon.png" class="sampleart">
-				<label for="samplefile">Sample</label>
-				<input type="file" class="form-control-file" id="samplefile" name="file" onchange="return fileValidation()" required />
+          <label for="samplefile">Sample</label>
+          <input type="file" class="form-control-file" id="samplefile" name="file" required />
         </div>
         <input type="hidden" id="file-url" name="file-url" value="">
             
-            <hr class="mb-4">
-            <input class="btn btn-primary btn-lg btn-block" type="submit" value="Submit Sample" id="samplesubmit">
-          </form>
-        </div>
-      </div>
-
-      <footer class="my-5 pt-5 text-muted text-center text-small">
-        <p class="mb-1">&copy; 2020- Joshua Pare</p>
-        <ul class="list-inline">
-          <li class="list-inline-item"><a href="#">Privacy</a></li>
-          <li class="list-inline-item"><a href="#">Terms</a></li>
-          <li class="list-inline-item"><a href="#">Support</a></li>
-        </ul>
-      </footer>
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" id="sampleSubmit">Submit Sample</button>
+      </section>
     </div>
-</main>
+  </div>
 
-<script> 
-        function fileValidation() { 
-            var fileInput =  
-                document.getElementById('samplefile'); 
-              
-            var filePath = fileInput.value; 
-          
-            // Allowing file type 
-            var allowedExtensions =  
-/(\.wav|\.mp3)$/i; 
-              
-            if (!allowedExtensions.exec(filePath)) { 
-                alert('Invalid file type'); 
-                fileInput.value = ''; 
-                return false; 
-            }  
-        } 
-</script> 
+      
+  </div>
+</main>
 
 <script>
 
@@ -242,11 +207,32 @@
     getSignedRequest(file);
   }
 
+  // File Validation
+
+  function fileValidation() { 
+            var fileInput =  
+                document.getElementById('samplefile'); 
+              
+            var filePath = fileInput.value; 
+          
+            // Allowing file type 
+            var allowedExtensions =  
+/(\.wav|\.mp3)$/i; 
+              
+            if (!allowedExtensions.exec(filePath)) { 
+                alert('Invalid file type'); 
+                fileInput.value = ''; 
+                return false; 
+            }  else {
+                initUpload();
+            }
+        } 
+
   /*
    Bind listeners when the page loads.
   */
   (() => {
-      document.getElementById('file-input').onchange = initUpload;
+      document.getElementById('samplefile').onchange = fileValidation;
   })();
 
   </script>

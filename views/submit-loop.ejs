@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create - Music App</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../stylesheets/create.css">
+    <script src="https://kit.fontawesome.com/023edff769.js" crossorigin="anonymous"></script></head>
+    
+<body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
+<main role="main" class="submissionarea">
+  <a href="/"><i class="fas fa-arrow-left"></i></a>
+    <div class="container">
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="/pictures/circle-logo.png" alt="" width="72" height="72">
+        <h2>Submit Your Work</h2>
+        <p class="lead">This is the time to share your work! If you have samples, loops, or projects you have created that you want to share, please use the form below to submit your own work!</p>
+		  <p>
+			  All submissions are screened. Please remember to adhere to the Community Guidelines. Innappropriate use of this site or this form will result in termination of your account.
+      </p>
+      <div id="alert"></div>
+      </div>
+	
+	<div class="d-flex justify-content-center">
+		<nav class="nav nav-masthead justify-content-center">
+            <a class="nav-link" id="packs" href="/submit/pack">Packs</a>
+            <a class="nav-link" id="samples" href="/submit/sample">Samples</a>
+            <a class="nav-link active" id="loops" href="/submit/loop">Loops</a>
+            <a class="nav-link" id="midi" href="/submit/midi">MIDI</a>
+            <a class="nav-link" id="multitracks" href="/submit/multitrack">Multitracks</a>
+            <a class="nav-link" id="presets" href="/submit/preset">Presets</a>
+            <a class="nav-link" id="plugins" href="/submit/plugin">Plugins</a>
+    </nav>
+	</div>
+		
+      <div class="row">
+
+        <div class="col-md-12 order-md-1">
+          <h4 class="mb-3"> </h4>
+          <section class="form">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="samplename">Loop Name</label>
+              <input type="text" class="form-control" id="samplename" name="name" placeholder="" value="" required>
+              <div class="invalid-feedback">
+                Valid loop name is required.
+              </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                    <label for="key">Key</label>
+                    <select class="custom-select d-block w-100" id="key" name="key" required>
+                        <option value="">Choose...</option>
+              <option>None</option>
+                        <option>C Major</option>
+              <option>C#/Db Major</option>
+              <option>D Major</option>
+              <option>D#/Eb Major</option>
+              <option>E Major</option>
+              <option>F Major</option>
+              <option>F#/Gb Major</option>
+              <option>G Major</option>
+              <option>G#/Ab Major</option>
+              <option>A Major</option>
+              <option>A#/Bb Major</option>
+              <option>B Major</option>
+              <div class="dropdown-divider"></div>
+              <option>C Minor</option>
+              <option>C#/Db Minor</option>
+              <option>D Minor</option>
+              <option>D#/Eb Minor</option>
+              <option>E Minor</option>
+              <option>F Minor</option>
+              <option>F#/Gb Minor</option>
+              <option>G Minor</option>
+              <option>G#/Ab Minor</option>
+              <option>A Minor</option>
+              <option>A#/Bb Minor</option>
+              <option>B Minor</option>
+                    </select>
+                    <div class="invalid-feedback">
+                      Please provide a valid key.
+                    </div>
+                  </div>
+            <div class="col-md-3 mb-3">
+                    <label for="packname">Pack</label>
+                    <select class="custom-select d-block w-100" id="packname" name="packname" required>
+                      <option value="">Choose...</option>
+              <% for(var i=0; i < packs.length; i++){ %>
+              <% if(packs[i].author.username == currentUser.username) { %>
+                <option><%= packs[i].name %></option>
+              <% } %>
+              <% } %>
+              </select>
+                    <div class="invalid-feedback">
+                      Valid pack name is required.
+                    </div>
+                  </div>
+          </div>
+				
+
+            <div class="row">
+              <div class="col-md-5 mb-3">
+                <label for="category">Category</label>
+                <select class="custom-select d-block w-100" id="category" name="category" required>
+                  <option value="">Choose...</option>
+                  <option>Drums</option>
+				  <option>Keys</option>
+				  <option>Synths</option>
+				  <option>Guitar</option>
+				  <option>Bass</option>
+				  <option>Vocals</option>
+				  <option>FX</option>
+				  <option>Misc</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please select a valid category.
+                </div>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label for="instrument">Instrument</label>
+                <input type="text" class="form-control" id="instrument" name="instrument" placeholder="" required>
+                <div class="invalid-feedback">
+                  Please provide a valid instrument.
+                </div>
+              </div>
+              <div class="col-md-1 mb-3">
+                <label for="bpm">BPM</label>
+                <input type="text" class="form-control" id="bpm" name="bpm" placeholder="" required>
+                <div class="invalid-feedback">
+                  Please provide a valid bpm.
+                </div>
+              </div>
+              <div class="col-md-3 mb-3">
+                <label for="tag">Tags</label>
+                <input type="text" class="form-control" id="tag" name="tag" placeholder="" required>
+                <div class="invalid-feedback">
+                  Tag required.
+                </div>
+              </div>
+            </div>
+			  <div class="form-group">
+          <label for="loopfile">Loop</label>
+          <input type="file" class="form-control-file" id="loopfile" name="file" required />
+        </div>
+        <input type="hidden" id="file-url" name="file-url" value="">
+            
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" id="loopSubmit">Submit Loop</button>
+      </section>
+    </div>
+  </div>
+
+      
+  </div>
+</main>
+
+<script>
+
+  /*
+    Function to carry out the actual PUT request to S3 using the signed request from the app.
+  */
+  function uploadFile(file, signedRequest, url){
+    const xhr = new XMLHttpRequest();
+    xhr.open('PUT', signedRequest);
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200){
+          document.getElementById('file-url').value = url;
+        }
+        else{
+          alert('Could not upload file.');
+        }
+      }
+    };
+    xhr.send(file);
+  }
+
+  /*
+    Function to get the temporary signed request from the app.
+    If request successful, continue to upload the file using this signed
+    request.
+  */
+  function getSignedRequest(file){
+    const encFileName = encodeURIComponent(file.name);
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', `/sign-s3?file-name=${encFileName}&file-type=${file.type}`);
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4){
+        if(xhr.status === 200){
+          const response = JSON.parse(xhr.responseText);
+          uploadFile(file, response.signedRequest, response.url);
+        }
+        else{
+          alert('Could not get signed URL.');
+        }
+      }
+    };
+    xhr.send();
+  }
+
+  /*
+   Function called when file input updated. If there is a file selected, then
+   start upload procedure by asking for a signed request from the app.
+  */
+  function initUpload(){
+    const files = document.getElementById('loopfile').files;
+    const file = files[0];
+    if(file == null){
+      return alert('No file selected.');
+    }
+    getSignedRequest(file);
+  }
+
+  // File Validation
+
+  function fileValidation() { 
+            var fileInput =  
+                document.getElementById('loopfile'); 
+              
+            var filePath = fileInput.value; 
+          
+            // Allowing file type 
+            var allowedExtensions =  
+/(\.wav|\.mp3)$/i; 
+              
+            if (!allowedExtensions.exec(filePath)) { 
+                alert('Invalid file type'); 
+                fileInput.value = ''; 
+                return false; 
+            }  else {
+                initUpload();
+            }
+        } 
+
+  /*
+   Bind listeners when the page loads.
+  */
+  (() => {
+      document.getElementById('loopfile').onchange = fileValidation;
+  })();
+
+  </script>
+
+<!-- Footer -->
+<footer class="mastfoot mt-auto">
+  <h6>&copy; Joshua Pare </h6>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="../assets/dist/js/create.js"></script>
+</div>
+</body>
+</html>

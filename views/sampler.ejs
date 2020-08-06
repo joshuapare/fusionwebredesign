@@ -1,8 +1,13 @@
 <!-- SAMPLER -->
 
 <ul class="nav nav-pills nav-fill filterbar">
-    <li class="nav-item">
-      <a class="nav-link" href="#">BPM</a>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">BPM</a>
+      <div class="dropdown-menu animate slideIn">
+          <div class="dropdown-item slider">
+              <div id="slider"></div>
+          </div>
+      </div>
     </li>
 
     <li class="nav-item dropdown">
@@ -67,7 +72,7 @@
         <input class="form-control" type="text" placeholder="Tags">
     </li>
     <li class="nav-item">
-        <button type="submit" class="btn btn-outline-light">Search</button>
+        <button type="submit" class="btn btn-outline-light" >Search</button>
     </li>
     
   </ul>
@@ -85,168 +90,25 @@
         <th scope="col" class="actioncol"></th>
     </tr>
     </thead>
-    <tbody>
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
+    <tbody id="samplerload">
 
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
-
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
-
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
-
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
-
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
-
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
-
-    <tr>
-        <td><i class="fas fa-play" onclick="wavesurfer.play()"></i></td>
-        <td><img class="samplerart" src="pictures/aaart1.jpeg"></td>
-        <td>Sample 1</td>
-        <td><div id="waveform"></div></td>
-        <td>
-            <button type="button" class="btn btn-light">Tag 1</button>
-            <button type="button" class="btn btn-light">Tag 2</button>
-        </td>
-        <td>C Major</td>
-        <td>135</td>
-        <td>
-            <i class="fas fa-plus"></i>
-            <i class="far fa-heart"></i>
-            <i class="fas fa-arrow-circle-down"></i>
-        </td>
-    </tr>
+    
     </tbody>
 </table>
 
-<!-- WAVELOADER SCRIPT -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.0/nouislider.min.css" />
+<script src="../assets/dist/js/noiuslider.js"></script>
+
 <script>
-    var wavesurfer = WaveSurfer.create({
-        container: document.querySelector('#waveform'),
-        waveColor: '#D9DCFF',
-        progressColor: '#4353FF',
-        cursorColor: '#4353FF',
-        barWidth: 1,
-        barRadius: 3,
-        cursorWidth: 0,
-        height: 25,
-        barGap: 2,
-        fillParent: true,
-        responsive: true
-    });
-    
-    wavesurfer.load('testsample.wav');
+
+    var slider = document.getElementById('slider');
+
+        noUiSlider.create(slider, {
+            start: [60, 200],
+            connect: true,
+            range: {
+                'min': 0,
+                'max': 200
+            }
+        });
 </script>

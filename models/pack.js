@@ -4,6 +4,11 @@ var packSchema = new mongoose.Schema({
 	name: String,
 	description: String,
 	image: String,
+	created_date: {
+		type: Date,
+		default: Date.now
+	},
+
 	author: {
 		id: {
 			type: mongoose.Schema.Types.ObjectId,
@@ -52,4 +57,6 @@ var packSchema = new mongoose.Schema({
 	],
 });
 
-module.exports = mongoose.model("Pack", packSchema);
+var Pack = mongoose.model("Pack", packSchema);
+
+module.exports = Pack;

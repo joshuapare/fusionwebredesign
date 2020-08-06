@@ -37,6 +37,9 @@ $(document).ready(function() {
             })
         })
 
+        $.getJSON('/api/packs')
+        .then(loadTopPacks);
+
         favoriteToggle();
 
         $('#dyncontent').fadeIn('slow');
@@ -212,4 +215,12 @@ function favoriteToggle(){
             
         });
     }, 500);
+}
+
+function loadTopPacks(packs) {
+    packs.forEach((pack) => {
+        $('#toppacks').append(
+            '<tr><td><img class="samplerart" src="' + pack.image + '"></td><td>' + pack.name + '</td></tr>'
+        );
+    });
 }
